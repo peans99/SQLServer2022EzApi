@@ -2256,16 +2256,22 @@ namespace Microsoft.SqlServer.SSIS.EzAPI
         public EzScript(EzDataFlow dataFlow) : base(dataFlow) { }
         public EzScript(EzDataFlow parent, IDTSComponentMetaData100 meta) : base(parent, meta) { }
 
-        private ScriptComponentHost host { get { return (Comp as IDTSManagedComponent100).InnerObject as ScriptComponentHost; } }
+        private dynamic host
+        {
+            get
+            {
+                return (Comp as IDTSManagedComponent100).InnerObject;
+            }
+        }
 
-        public VSTAComponentScriptingEngine ScriptingEngine
+        public dynamic ScriptingEngine
         {
             get
             {
                 return host.CurrentScriptingEngine; 
             }
         }
-
+	
         public string ReadOnlyVars
         {
             get { return (string)Meta.CustomPropertyCollection["ReadOnlyVariables"].Value; }
